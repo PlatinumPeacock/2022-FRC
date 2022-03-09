@@ -7,6 +7,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.DriveTrainTrial;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.LimeLight;
+import frc.robot.subsystems.RotateShooter;
 
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -14,7 +17,9 @@ import frc.robot.subsystems.Shooter;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutonomousOne extends SequentialCommandGroup {
   /** Creates a new AutonomousOne. */
-  public AutonomousOne(DriveTrainTrial dt, Shooter s) {
-    addCommands(new DriveForwardTimed(dt), new AutoShoot(s));
+  public AutonomousOne(DriveTrainTrial dt, Shooter s, LimeLight l, RotateShooter rs, Elevator e ) {
+    addCommands(new DriveForwardTimed(dt));
+    addCommands(new LimeLightRun(l, rs, s, dt, e));
+  
   }
 }
