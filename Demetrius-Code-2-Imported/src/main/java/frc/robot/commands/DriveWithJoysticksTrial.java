@@ -6,8 +6,6 @@ package frc.robot.commands;
 
 //import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrainTrial;
 
 public class DriveWithJoysticksTrial extends CommandBase {
@@ -27,7 +25,7 @@ public class DriveWithJoysticksTrial extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   driveTrain.driveWithJoysticks(RobotContainer.driverJoystick1, Constants.DRIVETRAINSPEED);
+   driveTrain.driveWithJoysticks();
   }
 
   // Called once the command ends or is interrupted.

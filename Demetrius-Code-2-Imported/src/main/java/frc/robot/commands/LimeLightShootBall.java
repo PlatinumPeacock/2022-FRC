@@ -4,31 +4,31 @@
 
 package frc.robot.commands;
 
-//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.DriveTrainTrial;
+import frc.robot.subsystems.Shooter;
 
-public class DriveWithJoysticksTrial extends CommandBase {
-  private final DriveTrainTrial driveTrain;
+public class LimeLightShootBall extends CommandBase {
+  Shooter shooter;
+  double shooterSpeed;
 
-  /** Creates a new DriveWithJoysticksTrial. */
-  public DriveWithJoysticksTrial(DriveTrainTrial dt) {
-    driveTrain = dt;
-    addRequirements(driveTrain);
+  /** Creates a new LimeLightShootBall. */
+  public LimeLightShootBall(Shooter s, double d) {
+    shooter = s;
+    addRequirements(shooter);
+    shooterSpeed = (0.018 * d)+ .25;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    shooter.limeLightShootBall(shooterSpeed);
+    
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-   driveTrain.driveWithJoysticks(RobotContainer.driverJoystick1, Constants.DRIVETRAINSPEED);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

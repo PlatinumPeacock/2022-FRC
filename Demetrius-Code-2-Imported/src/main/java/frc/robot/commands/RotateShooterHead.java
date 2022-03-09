@@ -4,19 +4,18 @@
 
 package frc.robot.commands;
 
-//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.DriveTrainTrial;
+import frc.robot.subsystems.RotateShooter;
 
-public class DriveWithJoysticksTrial extends CommandBase {
-  private final DriveTrainTrial driveTrain;
-
-  /** Creates a new DriveWithJoysticksTrial. */
-  public DriveWithJoysticksTrial(DriveTrainTrial dt) {
-    driveTrain = dt;
-    addRequirements(driveTrain);
+public class RotateShooterHead extends CommandBase {
+  RotateShooter rotateShooter;
+  int direction;
+  /** Creates a new RotateShooter. */
+  public RotateShooterHead(RotateShooter rs, int d) {
+    rotateShooter = rs;
+    addRequirements(rotateShooter);
+    direction = d;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,12 +26,14 @@ public class DriveWithJoysticksTrial extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   driveTrain.driveWithJoysticks(RobotContainer.driverJoystick1, Constants.DRIVETRAINSPEED);
+    rotateShooter.rotateShooterHead(Constants.ROTATER_SPEED * direction);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    rotateShooter.stop();
+  }
 
   // Returns true when the command should end.
   @Override

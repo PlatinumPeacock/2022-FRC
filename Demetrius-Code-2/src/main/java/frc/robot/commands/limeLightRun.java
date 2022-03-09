@@ -48,38 +48,6 @@ public class limeLightRun extends CommandBase {
   public void execute(){
   NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(3);
 
-  // won't turn right toward a target and light doesn't turn off when button is released
-
-  /*
-  if(NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0) == 1)
-  {
-    UpdateLimeLightTracking();
-
-    while(tx < -7)
-    {
-      rotateShooter.rotateShooterHead(-0.07);
-      UpdateLimeLightTracking();
-    }
-    
-    while(tx > 7)
-    {
-      rotateShooter.rotateShooterHead(0.07);
-      UpdateLimeLightTracking();    
-    }
-
-    if(tx > 7 && tx < -7)
-    {
-      rotateShooter.stop();
-    }
-
-    if(tx >= -7 && tx <= 7)
-    {
-      shooter.shootBall(1);
-    }
-    
-     
-  }
-  */
   updateLimeLightTracking();
   
   while(distance > 15)
@@ -124,7 +92,6 @@ public class limeLightRun extends CommandBase {
   public void end(boolean interrupted) {
     //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     //shooter.shootBall(0);
-    //rotateShooter.rotateShooterHead(0); 
 
     //shooter.stop();
     rotateShooter.stop();

@@ -4,7 +4,7 @@
 
 package frc.robot;
 
-//import edu.wpi.cscore.UsbCamera;
+//import edu.wpi.first.cscore.UsbCamera;
 //import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -16,20 +16,13 @@ import frc.robot.commands.AutoShoot;
 import frc.robot.commands.AutonomousOne;
 //import frc.robot.commands.AutonomousTwo;
 import frc.robot.commands.DriveForwardTimed;
-import frc.robot.commands.DriveToDistance;
 import frc.robot.commands.DriveWithJoysticksTrial;
 import frc.robot.commands.ElevatorBoth;
-import frc.robot.commands.ElevatorBothReverse;
 import frc.robot.commands.ElevatorHorizontal;
-import frc.robot.commands.ElevatorHorizontalReverse;
-//import frc.robot.commands.ElevatorUp;
-//import frc.robot.commands.ElevatorUpReverse;
 import frc.robot.commands.IntakeBall;
-import frc.robot.commands.IntakeReverse;
-import frc.robot.commands.RotateHeadLeft;
 import frc.robot.commands.RotateShooterHead;
 import frc.robot.commands.ShootBall;
-import frc.robot.commands.limeLightRun;
+import frc.robot.commands.LimeLightRun;
 import frc.robot.subsystems.DriveTrainTrial;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -55,7 +48,6 @@ public class RobotContainer {
   private final DriveTrainTrial driveTrain;
   private final DriveWithJoysticksTrial driveWithJoystick;
   private final DriveForwardTimed driveForwardTimed;
-  private final DriveToDistance driveToDistance;
   public static Joystick driverJoystick1;
   public static Joystick driverJoystick2;
   public static XboxController driverJoystick3;
@@ -65,11 +57,11 @@ public class RobotContainer {
   private final AutoShoot autoShoot;
 
   private final RotateShooter rotateShooter;
-  private final RotateShooterHead rotateShooterHead;
+  private RotateShooterHead rotateHeadRight;
+  private RotateShooterHead rotateHeadLeft;
 
   private final Intake intake;
   private final IntakeBall intakeBall;
-  private final IntakeReverse intakeReverse;
 
   private final Elevator elevator;
 
@@ -90,9 +82,6 @@ public class RobotContainer {
   driveForwardTimed = new DriveForwardTimed(driveTrain);
   driveForwardTimed.addRequirements(driveTrain);
 
-  driveToDistance = new DriveToDistance(driveTrain);
-  driveToDistance.addRequirements(driveTrain);
-
   driverJoystick1 = new Joystick(Constants.JOYSTICK11);
   driverJoystick2 = new Joystick(Constants.JOYSTICK22);
   driverJoystick3 = new XboxController(Constants.JOYSTICK3);
@@ -102,18 +91,20 @@ public class RobotContainer {
   shootBall.addRequirements(shooter);
 
   rotateShooter = new RotateShooter();
-  rotateShooterHead = new RotateShooterHead(rotateShooter);
-  rotateShooterHead.addRequirements(rotateShooter);
+  rotateHeadRight = new RotateShooterHead(rotateShooter, -1);
+  rotateHeadRight.addRequirements(rotateShooter);
+
+  rotateHeadLeft = new RotateShooterHead(rotateShooter, 1);
+  rotateHeadLeft.addRequirements(rotateShooter);
+
   
 
   autoShoot = new AutoShoot(shooter);
   autoShoot.addRequirements(shooter);
 
   intake = new Intake();
-  intakeBall = new IntakeBall(intake);
+  intakeBall = new IntakeBall(intake, 1);
   intakeBall.addRequirements(intake);
-  intakeReverse = new IntakeReverse(intake);
-  intakeReverse.addRequirements(intake);
     
   elevator = new Elevator();
   
@@ -133,7 +124,7 @@ public class RobotContainer {
   SmartDashboard.putData("Autonomous", chooser);
 
   //Initialize camera
-  //UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+  //UsbCamera camera = CameraServer.startAutomaticCapture();
   //camera.setResolution(Constants.CAMERA_RES_X, Constants.CAMERA_RES_Y);
 
     // Configure the button bindings
@@ -149,35 +140,34 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //add other buttons
-      JoystickButton shootButton = new JoystickButton(driverJoystick3, XboxController.Button.kA.value);
-      shootButton.whileHeld(new ShootBall(shooter));
+      JoystickButton shootButton = new JoystickButton(driverJoystick3, XboxController.Button.kX.value);
+      shootButton.whileHeld(shootBall);
 
-      JoystickButton rotaterButtonRight = new JoystickButton(driverJoystick3, XboxController.Button.kRightStick.value);
-      rotaterButtonRight.whileHeld(new RotateShooterHead(rotateShooter));
+      JoystickButton cameraButton = new JoystickButton(driverJoystick3, XboxController.Button.kB.value);
+      cameraButton.whileHeld(new LimeLightRun(limeLight, rotateShooter, shooter, driveTrain, elevator));
 
-      JoystickButton rotaterButtonLeft = new JoystickButton(driverJoystick3, XboxController.Button.kLeftStick.value);
-      rotaterButtonLeft.whileHeld(new RotateHeadLeft(rotateShooter)); //The left bumper will rotate the rotater in the opposite direction, this hasn't been made yet.
+      JoystickButton intakeButton = new JoystickButton(driverJoystick3, XboxController.Button.kA.value);
+      intakeButton.whileHeld(new IntakeBall(intake, 1));
 
-      JoystickButton intakeButton = new JoystickButton(driverJoystick3, XboxController.Button.kRightBumper.value);
-      intakeButton.whileHeld(new IntakeBall(intake));
-
-      JoystickButton elevatorHorizontalButton = new JoystickButton(driverJoystick3, XboxController.Button.kRightBumper.value);
+      JoystickButton elevatorHorizontalButton = new JoystickButton(driverJoystick3, XboxController.Button.kA.value);
       elevatorHorizontalButton.whileHeld(new ElevatorHorizontal(elevator));
 
-      JoystickButton elevatorBothButton = new JoystickButton(driverJoystick3, XboxController.Button.kLeftBumper.value);
-      elevatorBothButton.whileHeld(new ElevatorBoth(elevator));
+      JoystickButton elevatorBothButton = new JoystickButton(driverJoystick3, XboxController.Button.kY.value);
+      elevatorBothButton.whileHeld(new ElevatorBoth(elevator, 1));
 
-      JoystickButton intakeReverseButton = new JoystickButton(driverJoystick3, XboxController.Button.kY.value);
-      intakeReverseButton.whileHeld(new IntakeReverse(intake));
 
-      JoystickButton elevatorHorizontalReverseButton = new JoystickButton(driverJoystick3, XboxController.Button.kY.value);
-      elevatorHorizontalReverseButton.whileHeld(new ElevatorHorizontalReverse(elevator));
+      JoystickButton rotaterButtonRight = new JoystickButton(driverJoystick3, XboxController.Button.kRightBumper.value);
+      rotaterButtonRight.whileHeld(rotateHeadRight);
 
-      JoystickButton elevatorReverseButton = new JoystickButton(driverJoystick3, XboxController.Button.kB.value);
-      elevatorReverseButton.whileHeld(new ElevatorBothReverse(elevator));
+      JoystickButton rotaterButtonLeft = new JoystickButton(driverJoystick3, XboxController.Button.kLeftBumper.value);
+      rotaterButtonLeft.whileHeld(rotateHeadLeft); //The left bumper will rotate the rotater in the opposite direction, this hasn't been made yet.
 
-      JoystickButton cameraButton = new JoystickButton(driverJoystick3, XboxController.Button.kX.value);
-      cameraButton.whileHeld(new limeLightRun(limeLight, rotateShooter, shooter, driveTrain));
+
+      JoystickButton intakeReverseButton = new JoystickButton(driverJoystick3, XboxController.Button.kRightStick.value);
+      intakeReverseButton.whileHeld(new IntakeBall(intake, -1));
+
+      JoystickButton elevatorReverseButton = new JoystickButton(driverJoystick3, XboxController.Button.kRightStick.value);
+      elevatorReverseButton.whileHeld(new ElevatorBoth(elevator, -1));
 
       
 

@@ -13,10 +13,12 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 public class Elevator extends SubsystemBase {
   VictorSPX elevator;
   VictorSPX elevator2;
+  VictorSPX feeder;
   /** Creates a new Elevator. */
   public Elevator() {
     elevator = new VictorSPX(Constants.HORI_ELEVATOR);
     elevator2 = new VictorSPX(Constants.VERT_ELEVATOR);
+    feeder = new VictorSPX(Constants.SHOOTERFEEDER);
   }
 
   @Override
@@ -26,22 +28,12 @@ public class Elevator extends SubsystemBase {
 
   public void elevatorUp(double speed)
   {
-    elevator.set(ControlMode.PercentOutput, speed * -1);
-  }
-
-  public void elevatorUpReverse(double speed)
-  {
-    elevator.set(ControlMode.PercentOutput, speed);
+    elevator2.set(ControlMode.PercentOutput, speed * -1);
   }
 
   public void elevatorHorizontal(double speed)
   {
-    elevator2.set(ControlMode.PercentOutput, speed);
-  }
-
-  public void elevatorHorizontalReverse(double speed)
-  {
-    elevator2.set(ControlMode.PercentOutput, speed * -1);
+    elevator.set(ControlMode.PercentOutput, speed);
   }
 
   public void elevatorBoth(double speed)
@@ -50,10 +42,12 @@ public class Elevator extends SubsystemBase {
     elevator2.set(ControlMode.PercentOutput, speed);
   }
 
-  public void elevatorBothReverse(double speed)
+  public void elevatorReverse(double speed)
   {
-    elevator.set(ControlMode.PercentOutput, speed);
-    elevator2.set(ControlMode.PercentOutput, speed * -1);
+    elevator.set(ControlMode.PercentOutput, speed * -1);
+    elevator2.set(ControlMode.PercentOutput, speed);
+    feeder.set(ControlMode.PercentOutput, speed * -1);
+
   }
 
   public void stop()

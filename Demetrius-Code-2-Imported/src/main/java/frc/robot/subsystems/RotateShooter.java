@@ -7,16 +7,14 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-public class Intake extends SubsystemBase {
-  VictorSPX intake;
-
-  /** Creates a new Intake. */
-  public Intake() {
-    intake = new VictorSPX(Constants.INTAKE);
+public class RotateShooter extends SubsystemBase {
+  TalonSRX rotateShooter;
+  /** Creates a new RotateShooter. */
+  public RotateShooter() {
+    rotateShooter = new TalonSRX(Constants.ROTATER);
   }
 
   @Override
@@ -24,18 +22,14 @@ public class Intake extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void intakeBall(double speed)
+  public void rotateShooterHead(double speed)
   {
-    intake.set(ControlMode.PercentOutput, speed * -1);
+    rotateShooter.set(ControlMode.PercentOutput, speed);
   }
 
-  public void intakeReverse(double speed)
-  {
-    intake.set(ControlMode.PercentOutput, speed);
-  }
 
   public void stop()
   {
-    intake.set(ControlMode.PercentOutput, 0);
+    rotateShooter.set(ControlMode.PercentOutput, 0);
   }
 }

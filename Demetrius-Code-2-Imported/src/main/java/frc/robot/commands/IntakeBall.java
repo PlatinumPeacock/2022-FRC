@@ -4,19 +4,19 @@
 
 package frc.robot.commands;
 
-//import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.DriveTrainTrial;
+import frc.robot.subsystems.Intake;
 
-public class DriveWithJoysticksTrial extends CommandBase {
-  private final DriveTrainTrial driveTrain;
+public class IntakeBall extends CommandBase {
+  Intake intake;
+  int direction;
 
-  /** Creates a new DriveWithJoysticksTrial. */
-  public DriveWithJoysticksTrial(DriveTrainTrial dt) {
-    driveTrain = dt;
-    addRequirements(driveTrain);
+  /** Creates a new IntakeBall. */
+  public IntakeBall(Intake i, int d) {
+    intake = i;
+    direction = d;
+    addRequirements(intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -27,12 +27,14 @@ public class DriveWithJoysticksTrial extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-   driveTrain.driveWithJoysticks(RobotContainer.driverJoystick1, Constants.DRIVETRAINSPEED);
+  intake.intakeBall(Constants.INTAKE_SPEED * direction);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    intake.stop();
+  }
 
   // Returns true when the command should end.
   @Override

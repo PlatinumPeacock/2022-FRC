@@ -5,13 +5,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-//import edu.wpi.first.wpilibj.GenericHID;
-//import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
@@ -40,18 +35,18 @@ public class DriveTrainTrial extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void driveWithJoysticks(Joystick controller, double speed) {
-    leftFront.set(ControlMode.PercentOutput, Constants.JOYSTICK1.getY() * -1);
-    leftRear.set(ControlMode.PercentOutput, Constants.JOYSTICK1.getY() * -1);
-    rightFront.set(ControlMode.PercentOutput, Constants.JOYSTICK2.getY() * -1);
-    rightRear.set(ControlMode.PercentOutput, Constants.JOYSTICK2.getY() * -1);
+  public void driveWithJoysticks() {
+    leftFront.set(ControlMode.PercentOutput, Constants.JOYSTICK1.getY() * -0.9);
+    leftRear.set(ControlMode.PercentOutput, Constants.JOYSTICK1.getY() * -0.9);
+    rightFront.set(ControlMode.PercentOutput, Constants.JOYSTICK2.getY() * 0.9);
+    rightRear.set(ControlMode.PercentOutput, Constants.JOYSTICK2.getY() * 0.9);
   }
 
 
   public void driveForward(double speed)
   {
-    leftFront.set(ControlMode.PercentOutput, speed);
-    leftRear.set(ControlMode.PercentOutput, speed);
+    leftFront.set(ControlMode.PercentOutput, -speed);
+    leftRear.set(ControlMode.PercentOutput, -speed);
     rightFront.set(ControlMode.PercentOutput, speed);
     rightRear.set(ControlMode.PercentOutput, speed);
   }

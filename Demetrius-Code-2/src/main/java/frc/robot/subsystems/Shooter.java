@@ -5,27 +5,24 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.*;
-//import edu.wpi.first.wpilibj.SpeedControllerGroup;
 //import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
+
  PWMTalonFX shooter;
  PWMTalonFX shooter2Fx;
  PWMVictorSPX shooterFeeder;
  PWMVictorSPX shooterFeeder2; 
  double shooterSpeed = Constants.SHOOTER_SPEED;
  double shooterFeederSpeed = Constants.SHOOTERFEEDER_SPEED;
- //SpeedController shooter2Fx;
- //SpeedControllerGroup shooterMotors;
 
    //Creates a new Shooter. 
   public Shooter() {
-    shooter = new PWMTalonFX(Constants.SHOOTER);
-    shooter2Fx = new PWMTalonFX(Constants.SHOOTER2);
+    shooter = new PWMTalonFX(Constants.LEFT_SHOOTER);
+    shooter2Fx = new PWMTalonFX(Constants.RIGHT_SHOOTER);
     shooterFeeder = new PWMVictorSPX(Constants.SHOOTERFEEDER);
-    shooterFeeder2 = new PWMVictorSPX(Constants.SHOOTERFEEDER2);
   }
 
   @Override
