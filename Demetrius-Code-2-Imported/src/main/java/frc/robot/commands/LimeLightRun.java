@@ -67,7 +67,7 @@ public class LimeLightRun extends CommandBase {
   {
     driveTrain.driveWithJoysticks();
     rotateShooter.rotateShooterHead(0.15);
-    if(tx > -5)
+    if(tx > -3)
     {
       rotateShooter.stop();
       break;
@@ -79,7 +79,7 @@ public class LimeLightRun extends CommandBase {
   {
     driveTrain.driveWithJoysticks();
     rotateShooter.rotateShooterHead(-0.15);
-    if(tx < 5)
+    if(tx < 3)
     {
       rotateShooter.stop();
       break;
@@ -87,9 +87,14 @@ public class LimeLightRun extends CommandBase {
     updateLimeLightTracking();
   }
 
-  if(tx > -5 && tx < 5)
+  if(tx > -3 && tx < 3)
   {
     limeLightShooterSpeed();
+  }
+
+  if(tv == 0)
+  {
+    rotateShooter.stop();
   }
 
 }

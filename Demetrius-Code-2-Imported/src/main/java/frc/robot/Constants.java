@@ -50,7 +50,7 @@ public final class Constants {
 	public static final int JOYSTICK3 = 2;
 	
 
-	public static final double SHOOTER_SPEED = 0.46;
+	public static final double SHOOTER_SPEED = 0.25;
 	public static final double ROTATER_SPEED = 0.15;
 	public static final double INTAKE_SPEED = 1.0;
 	//public static final int CAMERA_RES_X = 320;  //width
