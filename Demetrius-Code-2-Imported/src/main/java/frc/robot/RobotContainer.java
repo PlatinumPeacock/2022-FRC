@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.AidensAuton;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.AutonomousOne;
 //import frc.robot.commands.AutonomousTwo;
@@ -68,6 +69,7 @@ public class RobotContainer {
   private final LimeLight limeLight;
 
   private final AutonomousOne autonomousOne;
+  private final AidensAuton aidensAuton;
   //private final AutonomousTwo autonomousTwo;
 
  SendableChooser<Command> chooser = new SendableChooser<>();
@@ -118,7 +120,7 @@ public class RobotContainer {
   //Add choices as options here
  //chooser.addOption("Autonomous Two", autonomousTwo);
   //Default option
-  chooser.setDefaultOption("Autonomous One", autonomousOne);
+  chooser.setDefaultOption("Aiden's Auton", aidensAuton);
  //chooser.setDefaultOption("Autonomous One", autonomousOne);
   //Add choice so smart dashboard
   SmartDashboard.putData("Autonomous", chooser);
@@ -144,7 +146,7 @@ public class RobotContainer {
       elevatorReverse.whileHeld(shootBall);
 
       JoystickButton cameraButton = new JoystickButton(driverJoystick3, XboxController.Button.kB.value);
-      cameraButton.whileHeld(new LimeLightRun(limeLight, rotateShooter, shooter, driveTrain, elevator));
+      cameraButton.whileHeld(new LimeLightRun(limeLight, shooter, elevator, driveTrain, rotateShooter));
 
       JoystickButton intakeButton = new JoystickButton(driverJoystick3, XboxController.Button.kA.value);
       intakeButton.whileHeld(new IntakeBall(intake, 1));
