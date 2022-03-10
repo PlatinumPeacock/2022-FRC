@@ -41,7 +41,7 @@ public final class Constants {
 	public static final int XBOX_RIGHT_Y_AXIS = 5;
 	public static final int RIGHT_TRIGGER = 3;
     public static final double DRIVETRAINSPEED = 1.0;
-	public static final double DRIVE_FORWARD_TIME = 4.0;
+	public static final double DRIVE_FORWARD_TIME = 1.0;
 	public static final double AUTONOMOUS_SPEED = -0.5;
 	public final static Joystick JOYSTICK1 =  new Joystick(0);
 	public static final int JOYSTICK11 = 0; //the port numbers for robot container

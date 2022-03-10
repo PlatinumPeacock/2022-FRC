@@ -10,6 +10,8 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.RotateShooter;
+import edu.wpi.first.wpilibj.Timer;
+
 
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,8 +20,17 @@ import frc.robot.subsystems.RotateShooter;
 public class AutonomousOne extends SequentialCommandGroup {
   /** Creates a new AutonomousOne. */
   public AutonomousOne(DriveTrainTrial dt, Shooter s, LimeLight l, RotateShooter rs, Elevator e ) {
-    addCommands(new DriveForwardTimed(dt));
-    addCommands(new LimeLightRun(l, rs, s, dt, e));
-  
+    Timer timer;
+    timer = new Timer();
+    timer.reset();
+    timer.start();
+    while (timer.get() < 1){
+
+      dt.driveForward(-0.5);
+
+    }
+    dt.stop();
+
+    new LimeLightRun(l, rs, s, dt, e);
   }
 }

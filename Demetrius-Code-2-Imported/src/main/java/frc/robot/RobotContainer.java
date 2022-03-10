@@ -112,7 +112,7 @@ public class RobotContainer {
 
   
 
-  autonomousOne = new AutonomousOne(driveTrain, shooter);
+  autonomousOne = new AutonomousOne(driveTrain, shooter, limeLight, rotateShooter, elevator);
   //autonomousTwo = new AutonomousTwo(driveTrain, shooter);
 
   //Add choices as options here
