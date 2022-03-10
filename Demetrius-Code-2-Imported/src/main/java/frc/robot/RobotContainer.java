@@ -140,8 +140,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //add other buttons
-      JoystickButton shootButton = new JoystickButton(driverJoystick3, XboxController.Button.kX.value);
-      shootButton.whileHeld(shootBall);
+      JoystickButton  elevatorReverse = new JoystickButton(driverJoystick3, XboxController.Button.kRightStick.value);
+      elevatorReverse.whileHeld(shootBall);
 
       JoystickButton cameraButton = new JoystickButton(driverJoystick3, XboxController.Button.kB.value);
       cameraButton.whileHeld(new LimeLightRun(limeLight, rotateShooter, shooter, driveTrain, elevator));
@@ -163,11 +163,11 @@ public class RobotContainer {
       rotaterButtonLeft.whileHeld(rotateHeadLeft); //The left bumper will rotate the rotater in the opposite direction, this hasn't been made yet.
 
 
-      JoystickButton intakeReverseButton = new JoystickButton(driverJoystick3, XboxController.Button.kRightStick.value);
+      JoystickButton intakeReverseButton = new JoystickButton(driverJoystick3, XboxController.Button.kX.value);
       intakeReverseButton.whileHeld(new IntakeBall(intake, -1));
 
-      JoystickButton elevatorReverseButton = new JoystickButton(driverJoystick3, XboxController.Button.kRightStick.value);
-      elevatorReverseButton.whileHeld(new ElevatorBoth(elevator, -1));
+      JoystickButton shooterButton = new JoystickButton(driverJoystick3, XboxController.Button.kX.value);
+      shooterButton.whileHeld(new ElevatorBoth(elevator, -1));
 
       
 

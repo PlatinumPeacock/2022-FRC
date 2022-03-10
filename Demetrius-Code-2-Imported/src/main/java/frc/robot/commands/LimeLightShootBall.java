@@ -15,7 +15,8 @@ public class LimeLightShootBall extends CommandBase {
   public LimeLightShootBall(Shooter s, double d) {
     shooter = s;
     addRequirements(shooter);
-    shooterSpeed = (0.018 * (d + 2)) + .25;
+    //shooterSpeed = (0.018 * (d)) + .25;
+    shooterSpeed = (0.368 + 0.00627 * d + 0.000312 * Math.pow(d, 2));
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
