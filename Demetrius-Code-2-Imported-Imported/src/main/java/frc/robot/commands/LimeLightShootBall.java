@@ -10,13 +10,14 @@ import frc.robot.subsystems.Shooter;
 public class LimeLightShootBall extends CommandBase {
   Shooter shooter;
   double shooterSpeed;
+  public static double adjust = 0;
 
   /** Creates a new LimeLightShootBall. */
   public LimeLightShootBall(Shooter s, double d) {
     shooter = s;
     addRequirements(shooter);
     //shooterSpeed = (0.018 * (d)) + .25;
-    shooterSpeed = (0.368 + 0.00627 * d + 0.000312 * Math.pow(d, 2));
+    shooterSpeed = (0.32 + 0.00627 * (d + adjust) + 0.000312 * Math.pow((d + adjust), 2));
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

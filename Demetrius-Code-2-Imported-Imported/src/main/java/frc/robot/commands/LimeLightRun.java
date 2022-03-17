@@ -14,6 +14,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Elevator;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
 
@@ -67,7 +68,7 @@ public class LimeLightRun extends CommandBase {
   {
     driveTrain.driveWithJoysticks();
     rotateShooter.rotateShooterHead(0.15);
-    if(tx > -3)
+    if(tx > -5)
     {
       rotateShooter.stop();
       break;
@@ -79,13 +80,15 @@ public class LimeLightRun extends CommandBase {
   {
     driveTrain.driveWithJoysticks();
     rotateShooter.rotateShooterHead(-0.15);
-    if(tx < 3)
+    if(tx < 5)
     {
       rotateShooter.stop();
       break;
     }
     updateLimeLightTracking();
   }
+
+  driveTrain.driveWithJoysticks();
 
   if(tx > -3 && tx < 3)
   {
@@ -94,7 +97,9 @@ public class LimeLightRun extends CommandBase {
 
   if(tv == 0)
   {
+    driveTrain.driveWithJoysticks();
     rotateShooter.stop();
+    shooter.shootBall(Constants.SHOOTER_SPEED);
   }
 
 }
@@ -105,8 +110,11 @@ public class LimeLightRun extends CommandBase {
   public void end(boolean interrupted) {
     //NetworkTableInstance.getDefault().getTable("limelight").getEntry("ledMode").setNumber(1);
     //shooter.shootBall(0);
+    driveTrain.driveWithJoysticks();
     shooter.slow();
+    driveTrain.driveWithJoysticks();
     shooter.stop();
+    driveTrain.driveWithJoysticks();
 
   }
 
@@ -118,6 +126,7 @@ public class LimeLightRun extends CommandBase {
 
   //updates limelight info
   public void updateLimeLightTracking(){
+    driveTrain.driveWithJoysticks();
     tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0);
     tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
     ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
@@ -127,9 +136,21 @@ public class LimeLightRun extends CommandBase {
 
   public void limeLightShooterSpeed()
   {
-    LimeLightShootBall shootBall = new LimeLightShootBall(shooter, distance);
-    shootBall.initialize();
-    elevatorBothButton.whileHeld(new ElevatorBoth(elevator, 1));
+    driveTrain.driveWithJoysticks();
+    if(tv==1)
+    {
+      driveTrain.driveWithJoysticks();
+      LimeLightShootBall shootBall = new LimeLightShootBall(shooter, distance);
+      shootBall.initialize();
+      elevatorBothButton.whileHeld(new ElevatorBoth(elevator, 1));
+    }
+    else
+    {
+      driveTrain.driveWithJoysticks();
+      shooter.shootBall(0.40);
+      elevatorBothButton.whileHeld(new ElevatorBoth(elevator, 1));
+
+    }
     /*
   if(shooter.getSpeed() != 0)
   {

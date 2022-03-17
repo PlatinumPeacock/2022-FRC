@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
-import frc.robot.Constants;
 
 public class ShootBall extends CommandBase {
   Shooter shooter;
@@ -22,7 +21,7 @@ public class ShootBall extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.shootBall(Constants.SHOOTER_SPEED);
+    shooter.shootBall(0.25);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

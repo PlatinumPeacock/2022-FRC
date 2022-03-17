@@ -32,6 +32,8 @@ public final class Constants {
 	public static final int SHOOTERFEEDER = 9;
 	public static final int LEFT_SHOOTER = 10;
 	public static final int RIGHT_SHOOTER = 11;
+	public static final int CLIMBER = 12;
+	public static final int PIN_PULL = 13;
 
 	//Analogue
 	public static final int RANGE_FINDER = 0;
@@ -41,7 +43,7 @@ public final class Constants {
 	public static final int XBOX_RIGHT_Y_AXIS = 5;
 	public static final int RIGHT_TRIGGER = 3;
     public static final double DRIVETRAINSPEED = 1.0;
-	public static final double DRIVE_FORWARD_TIME = 1.0;
+	public static final double DRIVE_FORWARD_TIME = 1.75;
 	public static final double AUTONOMOUS_SPEED = -0.5;
 	public final static Joystick JOYSTICK1 =  new Joystick(0);
 	public static final int JOYSTICK11 = 0; //the port numbers for robot container
@@ -50,7 +52,7 @@ public final class Constants {
 	public static final int JOYSTICK3 = 2;
 	
 
-	public static final double SHOOTER_SPEED = 0.25;
+	public static final double SHOOTER_SPEED = 0.42;
 	public static final double ROTATER_SPEED = 0.15;
 	public static final double INTAKE_SPEED = 1.0;
 	//public static final int CAMERA_RES_X = 320;  //width

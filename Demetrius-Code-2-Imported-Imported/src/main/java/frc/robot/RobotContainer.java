@@ -12,24 +12,26 @@ import edu.wpi.first.wpilibj.XboxController;
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.AidensAuton;
-import frc.robot.commands.AutoShoot;
-import frc.robot.commands.AutonomousOne;
-//import frc.robot.commands.AutonomousTwo;
-import frc.robot.commands.DriveForwardTimed;
 import frc.robot.commands.DriveWithJoysticksTrial;
 import frc.robot.commands.ElevatorBoth;
 import frc.robot.commands.ElevatorHorizontal;
 import frc.robot.commands.IntakeBall;
 import frc.robot.commands.RotateShooterHead;
 import frc.robot.commands.ShootBall;
+import frc.robot.commands.auton.AutonomousOne;
+import frc.robot.commands.auton.DriveForwardTimed;
 import frc.robot.commands.LimeLightRun;
+import frc.robot.commands.PinPull;
+import frc.robot.commands.Climb;
+import frc.robot.commands.ReverseEverything;
+import frc.robot.commands.AdjustDistance;
 import frc.robot.subsystems.DriveTrainTrial;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.LimeLight;
 import frc.robot.subsystems.RotateShooter;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Hanger;
 import edu.wpi.first.wpilibj2.command.Command;
 //import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -55,7 +57,6 @@ public class RobotContainer {
 
   private final Shooter shooter;
   private final ShootBall shootBall;
-  private final AutoShoot autoShoot;
 
   private final RotateShooter rotateShooter;
   private RotateShooterHead rotateHeadRight;
@@ -65,15 +66,30 @@ public class RobotContainer {
   private final IntakeBall intakeBall;
 
   private final Elevator elevator;
+  private final ReverseEverything reverseEverything;
 
   private final LimeLight limeLight;
 
-  private final AutonomousOne autonomousOne;
-  private final AidensAuton aidensAuton;
+  private final Hanger hanger;
+
+  //private final AutonomousOne autonomousOne;
+  //private final AidensAuton aidensAuton;
   //private final AutonomousTwo autonomousTwo;
 
  SendableChooser<Command> chooser = new SendableChooser<>();
-  
+
+
+  /** All Xbox controller inputs defined below */
+  /*final JoystickButton leftBumper = new JoystickButton(driverJoystick3, 5);
+  final JoystickButton rightBumper = new JoystickButton(driverJoystick3, 6);
+  final JoystickButton aButton = new JoystickButton(driverJoystick3, 1);
+  final JoystickButton bButton = new JoystickButton(driverJoystick3, 2);
+  final JoystickButton xButton = new JoystickButton(driverJoystick3, 3);
+  final JoystickButton yButton = new JoystickButton(driverJoystick3, 4);
+  final JoystickButton rightStick = new JoystickButton(driverJoystick3, 10);
+  final JoystickButton backButton = new JoystickButton(driverJoystick3, 7);
+  final JoystickButton startButton = new JoystickButton(driverJoystick3, 8);
+  */
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -99,29 +115,29 @@ public class RobotContainer {
   rotateHeadLeft = new RotateShooterHead(rotateShooter, 1);
   rotateHeadLeft.addRequirements(rotateShooter);
 
-  
-
-  autoShoot = new AutoShoot(shooter);
-  autoShoot.addRequirements(shooter);
-
   intake = new Intake();
   intakeBall = new IntakeBall(intake, 1);
   intakeBall.addRequirements(intake);
     
   elevator = new Elevator();
+  reverseEverything = new ReverseEverything(elevator, shooter, intake);
   
   limeLight = new LimeLight();
 
-  
+  hanger = new Hanger();
 
-  autonomousOne = new AutonomousOne(driveTrain, shooter, limeLight, rotateShooter, elevator);
+  
+  AutonomousOne autonOne = new AutonomousOne(driveTrain, shooter, limeLight,rotateShooter, elevator);
+  //autonomousOne = new AutonomousOne(driveTrain, shooter, limeLight, rotateShooter, elevator);
   //autonomousTwo = new AutonomousTwo(driveTrain, shooter);
 
   //Add choices as options here
  //chooser.addOption("Autonomous Two", autonomousTwo);
   //Default option
-  chooser.setDefaultOption("Aiden's Auton", aidensAuton);
- //chooser.setDefaultOption("Autonomous One", autonomousOne);
+  chooser.setDefaultOption("Autonomous One", autonOne);
+  //chooser.setDefaultOption("Aiden's Auton", AidensAuton);
+ 
+  //chooser.setDefaultOption("Autonomous One", autonomousOne);
   //Add choice so smart dashboard
   SmartDashboard.putData("Autonomous", chooser);
 
@@ -146,7 +162,7 @@ public class RobotContainer {
       elevatorReverse.whileHeld(shootBall);
 
       JoystickButton cameraButton = new JoystickButton(driverJoystick3, XboxController.Button.kB.value);
-      cameraButton.whileHeld(new LimeLightRun(limeLight, shooter, elevator, driveTrain, rotateShooter));
+      cameraButton.whileHeld(new LimeLightRun(limeLight, rotateShooter, shooter, driveTrain, elevator));
 
       JoystickButton intakeButton = new JoystickButton(driverJoystick3, XboxController.Button.kA.value);
       intakeButton.whileHeld(new IntakeBall(intake, 1));
@@ -157,29 +173,27 @@ public class RobotContainer {
       JoystickButton elevatorBothButton = new JoystickButton(driverJoystick3, XboxController.Button.kY.value);
       elevatorBothButton.whileHeld(new ElevatorBoth(elevator, 1));
 
-
       JoystickButton rotaterButtonRight = new JoystickButton(driverJoystick3, XboxController.Button.kRightBumper.value);
       rotaterButtonRight.whileHeld(rotateHeadRight);
 
       JoystickButton rotaterButtonLeft = new JoystickButton(driverJoystick3, XboxController.Button.kLeftBumper.value);
       rotaterButtonLeft.whileHeld(rotateHeadLeft); //The left bumper will rotate the rotater in the opposite direction, this hasn't been made yet.
 
-
       JoystickButton intakeReverseButton = new JoystickButton(driverJoystick3, XboxController.Button.kX.value);
-      intakeReverseButton.whileHeld(new IntakeBall(intake, -1));
+      intakeReverseButton.whileHeld(reverseEverything);
 
       JoystickButton shooterButton = new JoystickButton(driverJoystick3, XboxController.Button.kX.value);
       shooterButton.whileHeld(new ElevatorBoth(elevator, -1));
-
       
+      JoystickButton pinPullButton = new JoystickButton(driverJoystick3, XboxController.Button.kBack.value);
+      pinPullButton.whileHeld(new PinPull(hanger));
 
-       //JoystickButton intakeReverseButton = new JoystickButton(driverJoystick3, XboxController..value);
+      JoystickButton climbButton = new JoystickButton(driverJoystick3, XboxController.Button.kStart.value);
+      climbButton.whileHeld(new Climb(hanger));
 
-      //JoystickButton driveButton = new JoystickButton(driverJoystick3, XboxController.Button.kBumperRight.value);
-      //driveButton.whileHeld(new DriveToDistance(driveTrain));
-
-     //JoystickButton driveTimedButton= new JoystickButton(driverJoystick3, XboxController.Button.kBumperLeft.value);
-     //driveTimedButton.whenPressed(new DriveForwardTimed(driveTrain));
+      //JoystickButton centerTurret = new JoystickButton(driverJoystick3, XboxController.Button.kLeftStick);
+      
+      
   }
   public static enum HAND {
     LEFT, RIGHT
