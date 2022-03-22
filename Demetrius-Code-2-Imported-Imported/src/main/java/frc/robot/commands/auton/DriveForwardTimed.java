@@ -6,17 +6,18 @@ package frc.robot.commands.auton;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrainTrial;
 
 public class DriveForwardTimed extends CommandBase {
   DriveTrainTrial driveTrain;
+  double time;
   private boolean finish = false;
   Timer timer;
   /** Creates a new DriveForwardTimed. */
-  public DriveForwardTimed(DriveTrainTrial dt) {
+  public DriveForwardTimed(DriveTrainTrial dt, double t) {
   driveTrain = dt;
   addRequirements(driveTrain);
+  time = t;
   timer = new Timer();
   }
 
@@ -25,7 +26,7 @@ public class DriveForwardTimed extends CommandBase {
   public void initialize() {
     timer.reset();
     timer.start();
-    while(timer.get() < Constants.DRIVE_FORWARD_TIME)
+    while(timer.get() < time)
     {
       driveTrain.driveForward(0.3);
     }

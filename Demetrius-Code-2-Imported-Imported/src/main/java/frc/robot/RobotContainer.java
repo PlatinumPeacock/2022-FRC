@@ -97,7 +97,7 @@ public class RobotContainer {
   driveWithJoystick = new DriveWithJoysticksTrial(driveTrain);
   driveTrain.setDefaultCommand(driveWithJoystick);
 
-  driveForwardTimed = new DriveForwardTimed(driveTrain);
+  driveForwardTimed = new DriveForwardTimed(driveTrain, 0);
   driveForwardTimed.addRequirements(driveTrain);
 
   driverJoystick1 = new Joystick(Constants.JOYSTICK11);

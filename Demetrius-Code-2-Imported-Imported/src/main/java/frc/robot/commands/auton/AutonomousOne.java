@@ -22,7 +22,7 @@ public class AutonomousOne extends SequentialCommandGroup {
   /** Creates a new AutonomousOne. */
   public AutonomousOne(DriveTrainTrial dt, Shooter s, LimeLight l, RotateShooter rs, Elevator e ) {
     addCommands(new Tongue(e));
-    addCommands(new AutoShoot(s, e));
-    addCommands(new DriveForwardTimed(dt));
+    addCommands(new AutoLimeLight(s, l, e));
+    addCommands(new DriveForwardTimed(dt, 2));
   }
 }

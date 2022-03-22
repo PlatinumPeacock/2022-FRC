@@ -48,7 +48,24 @@ public class Shooter extends SubsystemBase {
       
     shooter.set(ControlMode.PercentOutput, speed*-1);
     shooter2Fx.set(ControlMode.PercentOutput, speed);
-    shooterFeeder.set(ControlMode.PercentOutput, speed);
+    shooterFeeder.set(ControlMode.PercentOutput, 1);
+  }
+
+  public void lowShoot(double speed)
+  {
+  speedCheck = speed;
+  
+  Timer timer = new Timer();
+  timer.reset();
+  timer.start();
+  while(timer.get() <= 0.25) {
+    shooter.set(ControlMode.PercentOutput, ((timer.get()*2) * speed)*-1);
+    shooter2Fx.set(ControlMode.PercentOutput, ((timer.get()*2) * speed));
+    }
+    
+  shooter.set(ControlMode.PercentOutput, speed*-1);
+  shooter2Fx.set(ControlMode.PercentOutput, speed);
+  shooterFeeder.set(ControlMode.PercentOutput, 0.75);
   }
   
    public void slow(){

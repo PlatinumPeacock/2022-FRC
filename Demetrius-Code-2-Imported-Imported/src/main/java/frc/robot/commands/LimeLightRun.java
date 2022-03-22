@@ -149,48 +149,12 @@ public class LimeLightRun extends CommandBase {
       driveTrain.driveWithJoysticks();
       shooter.shootBall(0.40);
       elevatorBothButton.whileHeld(new ElevatorBoth(elevator, 1));
-
     }
-    /*
-  if(shooter.getSpeed() != 0)
+  }
+
+  public double getDistance()
   {
     updateLimeLightTracking();
-    if(distance > 20)
-    {
-    shooter.shootBall(1);
-    elevator.elevatorBoth(Constants.ELEVATOR_SPEED);
-    updateLimeLightTracking();
-    }
-  else if(distance > 15)
-    {
-    shooter.shootBall(0.9);
-    elevator.elevatorBoth(Constants.ELEVATOR_SPEED);
-    updateLimeLightTracking();
-    }
-  else if(distance > 10)
-    {
-    shooter.shootBall(0.8);
-    elevator.elevatorBoth(Constants.ELEVATOR_SPEED);
-    updateLimeLightTracking();
-    }
-  else if(distance > 5)
-    {
-    shooter.shootBall(0.7);
-    elevator.elevatorBoth(Constants.ELEVATOR_SPEED);
-    updateLimeLightTracking();
-    }
-  else
-    {
-    shooter.shootBall(1);
-    elevator.elevatorBoth(Constants.ELEVATOR_SPEED);
-    updateLimeLightTracking();
-    }
-    
-  }*/
-  /*if(timer.get() >= 1)
-    {
-    elevator.elevatorBoth(Constants.ELEVATOR_SPEED);
-    }
-    */
+    return distance;
   }
 }
